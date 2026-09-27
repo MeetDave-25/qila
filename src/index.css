@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, Consolas, monospace;
+  --color-ink-950: #05070d;
+  --color-ink-900: #090d17;
+  --color-ink-850: #0c1120;
+  --color-ink-800: #111729;
+  --color-ink-700: #1a2238;
+  --color-saffron: #ff9933;
+  --color-indgreen: #138808;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-ink-950 text-slate-200 font-sans antialiased;
+  background-image:
+    radial-gradient(1200px 600px at 10% -10%, rgba(99, 102, 241, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(34, 211, 238, 0.08), transparent 60%),
+    radial-gradient(700px 400px at 50% 120%, rgba(16, 185, 129, 0.06), transparent 60%);
+  background-attachment: fixed;
+}
+
+.glass {
+  @apply bg-ink-900/70 border border-white/[0.06] backdrop-blur-xl rounded-2xl;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.6);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-sky-300 to-emerald-300;
+}
+
+/* scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fade-up 0.35s ease-out both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.caret::after {
+  content: "▍";
+  margin-left: 2px;
+  color: #818cf8;
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes scan {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+  box-shadow: 0 0 12px #22d3ee;
+  animation: scan 2.2s ease-in-out infinite alternate;
+}
+
+/* animated data-flow connectors (System Map) */
+@keyframes flow-x {
+  to {
+    background-position: 24px 0;
+  }
+}
+@keyframes flow-y {
+  to {
+    background-position: 0 24px;
+  }
+}
+.flow-x {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(129, 140, 248, 0.9) 0 6px, transparent 6px 12px);
+  background-size: 24px 2px;
+  animation: flow-x 0.9s linear infinite;
+}
+.flow-y {
+  width: 2px;
+  background: repeating-linear-gradient(180deg, rgba(129, 140, 248, 0.9) 0 6px, transparent 6px 12px);
+  background-size: 2px 24px;
+  animation: flow-y 0.9s linear infinite;
+}
+
+/* handwriting look for scanned notes */
+.handwriting {
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+}
