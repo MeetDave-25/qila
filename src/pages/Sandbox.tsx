@@ -107,7 +107,7 @@ export function Sandbox() {
     <div className="mx-auto max-w-[1400px] p-4 sm:p-6 lg:p-8">
       <PageHeader title="Tools & Sandbox" subtitle="Every local tool the agent can call, with least-privilege scopes, and the isolated container where generated code runs." />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Stat label="Registered tools" value="9" sub="8 enabled · 1 hard-disabled" icon={<Container size={17} />} />
         <Stat label="Sandbox runs (7d)" value="214" sub="98.1% exit 0 on first or second try" icon={<Terminal size={17} />} accent="cyan" />
         <Stat label="Avg. execution" value="0.74 s" sub="container cold start 312 ms" icon={<Timer size={17} />} accent="amber" />

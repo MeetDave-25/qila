@@ -201,7 +201,7 @@ function AgentMessage({ sc, run, modelId, manual, onPreview }: { sc: Scenario; r
 
   return (
     <div className="flex gap-3 sm:gap-4">
-      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-900/50">
+      <div className="hidden h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-900/50 sm:grid">
         <Sparkles size={17} />
       </div>
       <div className="min-w-0 flex-1 space-y-4">
@@ -570,13 +570,13 @@ export function Workbench() {
     <div className="flex h-full">
       <div className="flex min-w-0 flex-1 flex-col">
         <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+          <div className="mx-auto max-w-3xl px-4 py-5 sm:px-6 sm:py-8">
             {msgs.length === 0 ? (
-              <div className="fade-up pt-6 sm:pt-12">
+              <div className="fade-up pt-2 sm:pt-12">
                 <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-2xl shadow-indigo-900/60">
                   <Sparkles size={26} className="text-white" />
                 </div>
-                <h1 className="text-center text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                <h1 className="text-center text-2xl font-semibold tracking-tight text-white sm:text-4xl">
                   What should the <span className="text-gradient">agent</span> do today?
                 </h1>
                 <p className="mx-auto mt-3 max-w-lg text-center text-sm text-slate-400">
@@ -589,7 +589,7 @@ export function Workbench() {
                     </Badge>
                   ))}
                 </div>
-                <div className="mt-10 grid gap-3 sm:grid-cols-2">
+                <div className="mt-6 grid gap-3 sm:mt-10 sm:grid-cols-2">
                   {SCENARIOS.map((s) => {
                     const I = SCENARIO_ICONS[s.id]
                     const m = MODELS.find((x) => x.id === s.modelId)!
@@ -654,11 +654,11 @@ export function Workbench() {
         </div>
 
         {/* Composer */}
-        <div className="shrink-0 px-4 pb-5 sm:px-6">
+        <div className="safe-bottom shrink-0 px-3 sm:px-6">
           <div className="mx-auto max-w-3xl">
             <div className="glass relative !rounded-2xl p-2 focus-within:border-indigo-400/40">
               {picker && (
-                <div className="glass fade-up absolute bottom-full left-0 z-20 mb-2 w-80 !bg-ink-850/95 p-2">
+                <div className="glass fade-up absolute bottom-full left-0 z-20 mb-2 w-80 max-w-full !bg-ink-850/95 p-2">
                   <div className="flex items-center justify-between px-2 pb-2 pt-1">
                     <span className="text-xs font-semibold text-slate-300">Attach from knowledge base</span>
                     <button onClick={() => setPicker(false)} className="text-slate-500 hover:text-white">
@@ -717,9 +717,9 @@ export function Workbench() {
                   <select
                     value={modelSel}
                     onChange={(e) => setModelSel(e.target.value)}
-                    className="appearance-none rounded-lg bg-white/[0.04] py-1.5 pl-7 pr-7 text-xs text-slate-300 ring-1 ring-white/[0.06] outline-none"
+                    className="max-w-[170px] appearance-none truncate rounded-lg bg-white/[0.04] py-1.5 pl-7 pr-7 text-xs text-slate-300 ring-1 ring-white/[0.06] outline-none sm:max-w-none"
                   >
-                    <option value="auto" className="bg-ink-900">Auto-route (recommended)</option>
+                    <option value="auto" className="bg-ink-900">Auto-route</option>
                     {MODELS.filter((m) => m.role !== 'embedding').map((m) => (
                       <option key={m.id} value={m.id} className="bg-ink-900">
                         {m.name}
@@ -731,7 +731,7 @@ export function Workbench() {
                 </div>
                 {msgs.length > 0 && !busy && (
                   <button onClick={() => setMsgs([])} className="flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs text-slate-400 hover:bg-white/[0.06] hover:text-white">
-                    <RotateCcw size={12} /> New session
+                    <RotateCcw size={12} /> <span className="hidden sm:inline">New session</span>
                   </button>
                 )}
                 <span className="ml-auto hidden text-[11px] text-slate-600 sm:inline">Runs on {'gpu-node-01'} · nothing leaves this network</span>

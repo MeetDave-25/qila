@@ -181,7 +181,7 @@ export function Knowledge() {
     <div className="mx-auto max-w-[1400px] p-4 sm:p-6 lg:p-8">
       <PageHeader title="Knowledge Base" subtitle="Company SOPs, manuals, drawings and correspondence — parsed, embedded and searchable entirely on-premise." />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Stat label="Documents" value="12,406" sub="PDF · DOCX · images · CSV" icon={<Layers size={17} />} />
         <Stat label="Vector chunks" value="38.2K" sub="Qdrant · 1024-dim · HNSW" icon={<Binary size={17} />} accent="cyan" />
         <Stat label="OCR'd pages" value="4,871" sub="incl. 612 handwritten" icon={<ScanLine size={17} />} accent="amber" />
@@ -343,11 +343,11 @@ export function Knowledge() {
               <thead className="border-y border-white/[0.05] text-[11px] uppercase tracking-wider text-slate-500">
                 <tr>
                   <th className="px-5 py-2.5 font-medium">Name</th>
-                  <th className="px-3 py-2.5 font-medium">Category</th>
-                  <th className="px-3 py-2.5 text-right font-medium">Pages</th>
-                  <th className="px-3 py-2.5 text-right font-medium">Chunks</th>
+                  <th className="hidden px-3 py-2.5 font-medium sm:table-cell">Category</th>
+                  <th className="hidden px-3 py-2.5 text-right font-medium sm:table-cell">Pages</th>
+                  <th className="hidden px-3 py-2.5 text-right font-medium sm:table-cell">Chunks</th>
                   <th className="px-3 py-2.5 font-medium">Processing</th>
-                  <th className="px-5 py-2.5 font-medium">Owner</th>
+                  <th className="hidden px-5 py-2.5 font-medium md:table-cell">Owner</th>
                 </tr>
               </thead>
               <tbody>
@@ -356,14 +356,14 @@ export function Knowledge() {
                     <td className="px-5 py-2.5">
                       <div className="flex items-center gap-2.5">
                         <FileIcon kind={d.kind} size="sm" />
-                        <span className="max-w-[260px] truncate text-slate-200">{d.name}</span>
+                        <span className="max-w-[170px] truncate text-slate-200 sm:max-w-[260px]">{d.name}</span>
                       </div>
                     </td>
-                    <td className="px-3 py-2.5">
+                    <td className="hidden px-3 py-2.5 sm:table-cell">
                       <Badge>{d.category}</Badge>
                     </td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-400">{d.pages}</td>
-                    <td className="px-3 py-2.5 text-right font-mono text-slate-400">{d.chunks}</td>
+                    <td className="hidden px-3 py-2.5 text-right font-mono text-slate-400 sm:table-cell">{d.pages}</td>
+                    <td className="hidden px-3 py-2.5 text-right font-mono text-slate-400 sm:table-cell">{d.chunks}</td>
                     <td className="px-3 py-2.5">
                       <div className="flex gap-1">
                         {d.ocr && <Badge tone="violet"><ScanLine size={10} /> OCR</Badge>}
@@ -371,7 +371,7 @@ export function Knowledge() {
                         {!d.ocr && <Badge tone="emerald">Native text</Badge>}
                       </div>
                     </td>
-                    <td className="px-5 py-2.5 text-slate-400">{d.owner}</td>
+                    <td className="hidden px-5 py-2.5 text-slate-400 md:table-cell">{d.owner}</td>
                   </tr>
                 ))}
               </tbody>

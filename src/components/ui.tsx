@@ -21,7 +21,7 @@ export function CardHeader({
   right?: ReactNode
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 px-5 pt-4 pb-3">
+    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 pb-3 pt-4 sm:px-5">
       <div className="flex items-center gap-3 min-w-0">
         {icon && (
           <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/[0.04] text-indigo-300 ring-1 ring-white/10">
@@ -164,24 +164,24 @@ export function Stat({
     amber: 'from-amber-500/20 text-amber-300',
   }[accent]
   return (
-    <Card className="relative overflow-hidden p-5">
+    <Card className="relative overflow-hidden p-3.5 sm:p-5">
       <div className={cn('pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br to-transparent blur-2xl', a)} />
       <div className="flex items-start justify-between">
-        <p className="text-xs font-medium uppercase tracking-wider text-slate-500">{label}</p>
-        <div className={cn('grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br to-white/[0.02] ring-1 ring-white/10', a)}>{icon}</div>
+        <p className="pr-1 text-[10px] font-medium uppercase leading-tight tracking-wider text-slate-500 sm:text-xs">{label}</p>
+        <div className={cn('grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br to-white/[0.02] ring-1 ring-white/10 sm:h-9 sm:w-9 sm:rounded-xl [&_svg]:h-3.5 [&_svg]:w-3.5 sm:[&_svg]:h-[17px] sm:[&_svg]:w-[17px]', a)}>{icon}</div>
       </div>
-      <div className="mt-3 text-3xl font-semibold tracking-tight text-white">{value}</div>
-      {sub && <div className="mt-1 text-xs text-slate-400">{sub}</div>}
+      <div className="mt-2 text-2xl font-semibold tracking-tight text-white sm:mt-3 sm:text-3xl">{value}</div>
+      {sub && <div className="mt-1 line-clamp-2 text-[11px] leading-snug text-slate-400 sm:text-xs">{sub}</div>}
     </Card>
   )
 }
 
 export function PageHeader({ title, subtitle, right }: { title: string; subtitle: string; right?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div className="mb-5 flex flex-wrap items-end justify-between gap-3 sm:mb-6 sm:gap-4">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-white">{title}</h1>
-        <p className="mt-1 text-sm text-slate-400">{subtitle}</p>
+        <h1 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{title}</h1>
+        <p className="mt-1 text-[13px] leading-relaxed text-slate-400 sm:text-sm">{subtitle}</p>
       </div>
       {right}
     </div>

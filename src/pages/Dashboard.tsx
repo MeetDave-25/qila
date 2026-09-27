@@ -61,7 +61,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (p: PageId) => void }) {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Stat label="Agent tasks today" value="148" sub={<span><span className="text-emerald-400">↑ 23%</span> vs yesterday</span>} icon={<Bot size={17} />} />
         <Stat label="Documents indexed" value="12,406" sub={`${DOCS.length} added this week · 38.2K chunks`} icon={<Database size={17} />} accent="cyan" />
         <Stat label="Hours saved (est.)" value="96.5" sub="based on manual task baselines" icon={<Zap size={17} />} accent="amber" />
@@ -249,7 +249,7 @@ export function ImpactStrip() {
   return (
     <Card className="mt-4">
       <CardHeader title="Impact this month" subtitle="Measured from usage logs against manual baselines" icon={<TrendingUp size={16} />} />
-      <div className="grid gap-3 px-5 pb-5 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 px-4 pb-4 sm:px-5 sm:pb-5 lg:grid-cols-5 [&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1">
         {IMPACT.map((x) => (
           <div key={x.t} className="rounded-xl bg-white/[0.02] p-4 ring-1 ring-white/[0.05]">
             <div className={`grid h-8 w-8 place-items-center rounded-lg ring-1 ${x.c}`}>

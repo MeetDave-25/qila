@@ -135,3 +135,26 @@ body {
 .handwriting {
   font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
 }
+
+/* grid/flex children may shrink below their content width (prevents tables & charts from pushing the page wider than the phone) */
+main .grid > *,
+.glass {
+  min-width: 0;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.drawer-in {
+  animation: drawer-in 0.22s ease-out both;
+}
+
+/* respect iPhone home-indicator area */
+.safe-bottom {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}

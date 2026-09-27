@@ -76,7 +76,7 @@ export function Security() {
         </div>
       </Card>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Stat label="Egress (24h)" value="0 B" sub="to non-RFC1918 addresses" icon={<WifiOff size={17} />} accent="emerald" />
         <Stat label="Internal traffic (24h)" value="6.8 GB" sub="between workbench services" icon={<Network size={17} />} accent="cyan" />
         <Stat label="Sandbox runs" value="214" sub="Docker · no-net · read-only FS" icon={<Box size={17} />} />

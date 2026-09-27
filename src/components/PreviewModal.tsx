@@ -15,7 +15,7 @@ export function PreviewBody({ d }: { d: Deliverable }) {
             <tr>
               <th className="w-8 border border-slate-200 bg-slate-100 text-[11px] text-slate-400" />
               {p.columns.map((c) => (
-                <th key={c} className="border border-slate-200 bg-slate-100 px-2.5 py-1.5 text-left font-semibold text-slate-700">
+                <th key={c} className="whitespace-nowrap border border-slate-200 bg-slate-100 px-2.5 py-1.5 text-left font-semibold text-slate-700">
                   {c}
                 </th>
               ))}
@@ -31,7 +31,7 @@ export function PreviewBody({ d }: { d: Deliverable }) {
                   return (
                     <td
                       key={j}
-                      className={`border border-slate-200 px-2.5 py-1.5 ${typeof c === 'number' ? 'text-right tabular-nums' : ''} ${low || warn ? 'bg-amber-100 font-medium text-amber-900' : ''}`}
+                      className={`whitespace-nowrap border border-slate-200 px-2.5 py-1.5 ${typeof c === 'number' ? 'text-right tabular-nums' : ''} ${low || warn ? 'bg-amber-100 font-medium text-amber-900' : ''}`}
                     >
                       {c}
                     </td>
@@ -56,8 +56,8 @@ export function PreviewBody({ d }: { d: Deliverable }) {
     )
   if (p.type === 'doc')
     return (
-      <div className="max-h-[62vh] overflow-auto rounded-lg bg-slate-200 p-4 sm:p-8">
-        <div className="mx-auto max-w-2xl bg-white px-6 py-8 text-slate-800 shadow-xl sm:px-12 sm:py-12">
+      <div className="max-h-[62vh] overflow-auto rounded-lg bg-slate-200 p-2 sm:p-8">
+        <div className="mx-auto max-w-2xl bg-white px-5 py-6 text-slate-800 shadow-xl sm:px-12 sm:py-12">
           <div className={`mb-1 h-1 w-16 ${d.kind === 'pdf' ? 'bg-rose-600' : 'bg-blue-700'}`} />
           <h1 className="text-xl font-bold text-slate-900">{p.title}</h1>
           <p className="mt-1 text-xs text-slate-500">{p.meta}</p>
@@ -105,13 +105,13 @@ export function PreviewModal({ d, onClose }: { d: Deliverable | null; onClose: (
   }, [onClose])
   if (!d) return null
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-sm" onClick={onClose}>
-      <div className="glass fade-up w-full max-w-4xl !bg-ink-900/95 p-5" onClick={(e) => e.stopPropagation()}>
-        <div className="mb-4 flex items-center gap-3">
+    <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-2 backdrop-blur-sm sm:p-4" onClick={onClose}>
+      <div className="glass fade-up max-h-[94dvh] w-full max-w-4xl overflow-y-auto !bg-ink-900/95 p-3 sm:p-5" onClick={(e) => e.stopPropagation()}>
+        <div className="mb-3 flex items-center gap-3 sm:mb-4">
           <FileIcon kind={d.kind} />
           <div className="min-w-0 flex-1">
             <div className="truncate font-semibold text-white">{d.name}</div>
-            <div className="flex items-center gap-2 text-xs text-slate-400">
+            <div className="flex flex-wrap items-center gap-x-2 text-xs text-slate-400">
               {d.size} · generated locally
               <span className="inline-flex items-center gap-1 text-emerald-300">
                 <ShieldCheck size={12} /> SHA-256 logged in audit trail
@@ -119,7 +119,7 @@ export function PreviewModal({ d, onClose }: { d: Deliverable | null; onClose: (
             </div>
           </div>
           <Button variant="outline" onClick={() => exportFile(d)}>
-            <Download size={15} /> Download
+            <Download size={15} /> <span className="hidden sm:inline">Download</span>
           </Button>
           <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-white/[0.06] hover:text-white">
             <X size={18} />

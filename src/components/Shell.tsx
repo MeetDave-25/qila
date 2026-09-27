@@ -15,6 +15,8 @@ import {
   Workflow,
   LogOut,
   KeyRound,
+  Menu,
+  X,
 } from 'lucide-react'
 import { cn, Dot, Logo } from './ui'
 import { GPU } from '../data/mock'
@@ -91,91 +93,116 @@ function UserMenu() {
   )
 }
 
+function SidebarBody({ page, onNavigate }: { page: PageId; onNavigate: (p: PageId) => void }) {
+  return (
+    <>
+    <div className="flex items-center gap-3 px-5 py-5">
+      <Logo />
+      <div>
+        <div className="text-lg font-bold leading-none tracking-[0.18em] text-white">QILA</div>
+        <div className="mt-1 whitespace-nowrap text-[10.5px] font-medium tracking-wide text-slate-500">Your AI. Your fort.</div>
+      </div>
+    </div>
+
+    <button className="mx-4 mb-3 flex items-center gap-3 rounded-xl bg-white/[0.03] px-3 py-2.5 text-left ring-1 ring-white/[0.06] hover:bg-white/[0.05]">
+      <div className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-500/10 text-emerald-300">
+        <Server size={16} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-xs font-medium text-slate-200">Refinery Unit-2</div>
+        <div className="truncate text-[11px] text-slate-500">{GPU.host}</div>
+      </div>
+      <ChevronsUpDown size={14} className="text-slate-500" />
+    </button>
+
+    <nav className="flex-1 space-y-4 overflow-y-auto px-3">
+      {NAV.map((g) => (
+        <div key={g.group} className="space-y-0.5">
+          <p className="px-3 pb-1.5 pt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600">{g.group}</p>
+          {g.items.map((n) => {
+            const active = page === n.id
+            return (
+              <button
+                key={n.id}
+                onClick={() => onNavigate(n.id)}
+                className={cn(
+                  'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition',
+                  active ? 'bg-gradient-to-r from-indigo-500/15 to-transparent text-white' : 'text-slate-400 hover:bg-white/[0.04] hover:text-slate-200',
+                )}
+              >
+                {active && <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-indigo-400 shadow-[0_0_12px] shadow-indigo-400" />}
+                <n.icon size={17} className={active ? 'text-indigo-300' : 'text-slate-500 group-hover:text-slate-300'} />
+                <span className="flex-1 text-left">{n.label}</span>
+                {n.badge && <span className="rounded bg-gradient-to-r from-indigo-500 to-violet-500 px-1.5 py-px text-[10px] font-semibold text-white">{n.badge}</span>}
+              </button>
+            )
+          })}
+        </div>
+      ))}
+    </nav>
+
+    {/* Air-gap card */}
+    <button onClick={() => onNavigate('security')} className="m-4 overflow-hidden rounded-xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 to-transparent p-4 text-left transition hover:border-emerald-400/40">
+      <div className="flex items-center gap-2 text-xs font-semibold text-emerald-300">
+        <WifiOff size={14} /> AIR-GAPPED MODE
+      </div>
+      <div className="mt-2 flex items-baseline gap-1">
+        <span className="font-mono text-2xl font-semibold text-white">0</span>
+        <span className="text-xs text-slate-400">bytes external egress</span>
+      </div>
+      <div className="mt-1 text-[11px] text-slate-500">
+        Verified <Clock />
+      </div>
+    </button>
+    </>
+  )
+}
+
 export function Shell({ page, onNavigate, children }: { page: PageId; onNavigate: (p: PageId) => void; children: ReactNode }) {
   const mainRef = useRef<HTMLElement>(null)
+  const [drawer, setDrawer] = useState(false)
+  const current = ALL.find((n) => n.id === page)!
   useEffect(() => {
     mainRef.current?.scrollTo(0, 0)
+    setDrawer(false)
   }, [page])
   return (
     <div className="flex h-full">
       {/* Sidebar */}
       <aside className="hidden w-64 shrink-0 flex-col border-r border-white/[0.06] bg-ink-900/60 backdrop-blur-xl lg:flex">
-        <div className="flex items-center gap-3 px-5 py-5">
-          <Logo />
-          <div>
-            <div className="text-lg font-bold leading-none tracking-[0.18em] text-white">QILA</div>
-            <div className="mt-1 whitespace-nowrap text-[10.5px] font-medium tracking-wide text-slate-500">Your AI. Your fort.</div>
-          </div>
-        </div>
-
-        <button className="mx-4 mb-3 flex items-center gap-3 rounded-xl bg-white/[0.03] px-3 py-2.5 text-left ring-1 ring-white/[0.06] hover:bg-white/[0.05]">
-          <div className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-500/10 text-emerald-300">
-            <Server size={16} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-xs font-medium text-slate-200">Refinery Unit-2</div>
-            <div className="truncate text-[11px] text-slate-500">{GPU.host}</div>
-          </div>
-          <ChevronsUpDown size={14} className="text-slate-500" />
-        </button>
-
-        <nav className="flex-1 space-y-4 overflow-y-auto px-3">
-          {NAV.map((g) => (
-            <div key={g.group} className="space-y-0.5">
-              <p className="px-3 pb-1.5 pt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600">{g.group}</p>
-              {g.items.map((n) => {
-                const active = page === n.id
-                return (
-                  <button
-                    key={n.id}
-                    onClick={() => onNavigate(n.id)}
-                    className={cn(
-                      'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition',
-                      active ? 'bg-gradient-to-r from-indigo-500/15 to-transparent text-white' : 'text-slate-400 hover:bg-white/[0.04] hover:text-slate-200',
-                    )}
-                  >
-                    {active && <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-indigo-400 shadow-[0_0_12px] shadow-indigo-400" />}
-                    <n.icon size={17} className={active ? 'text-indigo-300' : 'text-slate-500 group-hover:text-slate-300'} />
-                    <span className="flex-1 text-left">{n.label}</span>
-                    {n.badge && <span className="rounded bg-gradient-to-r from-indigo-500 to-violet-500 px-1.5 py-px text-[10px] font-semibold text-white">{n.badge}</span>}
-                  </button>
-                )
-              })}
-            </div>
-          ))}
-        </nav>
-
-        {/* Air-gap card */}
-        <button onClick={() => onNavigate('security')} className="m-4 overflow-hidden rounded-xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 to-transparent p-4 text-left transition hover:border-emerald-400/40">
-          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-300">
-            <WifiOff size={14} /> AIR-GAPPED MODE
-          </div>
-          <div className="mt-2 flex items-baseline gap-1">
-            <span className="font-mono text-2xl font-semibold text-white">0</span>
-            <span className="text-xs text-slate-400">bytes external egress</span>
-          </div>
-          <div className="mt-1 text-[11px] text-slate-500">
-            Verified <Clock />
-          </div>
-        </button>
+        <SidebarBody page={page} onNavigate={onNavigate} />
       </aside>
+
+      {/* Mobile drawer */}
+      {drawer && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="fade-up absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setDrawer(false)} />
+          <aside className="drawer-in absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col border-r border-white/[0.08] bg-ink-900 shadow-2xl shadow-black">
+            <button onClick={() => setDrawer(false)} aria-label="Close menu" className="absolute right-3 top-5 grid h-8 w-8 place-items-center rounded-lg text-slate-400 hover:bg-white/[0.06] hover:text-white">
+              <X size={18} />
+            </button>
+            <SidebarBody
+              page={page}
+              onNavigate={(p) => {
+                setDrawer(false)
+                onNavigate(p)
+              }}
+            />
+          </aside>
+        </div>
+      )}
 
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="relative z-30 flex h-16 shrink-0 items-center gap-4 border-b border-white/[0.06] bg-ink-900/40 px-4 backdrop-blur-xl sm:px-6">
-          <div className="flex items-center gap-2 lg:hidden">
-            <Logo />
-            <select
-              value={page}
-              onChange={(e) => onNavigate(e.target.value as PageId)}
-              className="rounded-lg bg-white/[0.04] px-2 py-1.5 text-sm text-slate-200 ring-1 ring-white/10"
-            >
-              {ALL.map((n) => (
-                <option key={n.id} value={n.id} className="bg-ink-900">
-                  {n.label}
-                </option>
-              ))}
-            </select>
+        <header className="relative z-30 flex h-16 shrink-0 items-center gap-3 border-b border-white/[0.06] bg-ink-900/40 px-4 backdrop-blur-xl sm:px-6">
+          <div className="flex min-w-0 items-center gap-2.5 lg:hidden">
+            <button onClick={() => setDrawer(true)} aria-label="Open menu" className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-slate-300 ring-1 ring-white/10 hover:bg-white/[0.05]">
+              <Menu size={18} />
+            </button>
+            <div className="min-w-0">
+              <div className="text-[10px] font-bold leading-none tracking-[0.2em] text-slate-500">QILA</div>
+              <div className="truncate text-[15px] font-semibold leading-tight text-white">{current.label}</div>
+            </div>
           </div>
 
           <div className="relative hidden max-w-md flex-1 md:block">
@@ -189,6 +216,9 @@ export function Shell({ page, onNavigate, children }: { page: PageId; onNavigate
           </div>
 
           <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            <div className="grid h-9 w-9 place-items-center rounded-lg bg-emerald-500/10 ring-1 ring-emerald-500/20 sm:hidden" title="Offline · On-Prem">
+              <Dot pulse />
+            </div>
             <div className="hidden items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-300 ring-1 ring-emerald-500/20 sm:flex">
               <Dot pulse /> Offline · On-Prem
             </div>
